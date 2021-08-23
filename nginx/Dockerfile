@@ -13,7 +13,7 @@ RUN /install_frappe ${FRAPPE_BRANCH} && \
   /install_erpnext && \
   # Install required apps with following command
   # /install_app <app_name> <repo> <app_branch>
-  /install_app isppme https://github.com/kingraphaii/isppme master && \
+  /install_app isppme https://github.com/kingraphaii/isppme main && \
   # Cleanup for production
   /prepare_production
 
