@@ -6,7 +6,7 @@
 
 This file uses following app(s):
 
-- https://github.com/yrestom/POS-Awesome
+- https://github.com/kingraphaii/isppme
 
 ### Build images
 
