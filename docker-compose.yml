@@ -1,28 +1,6 @@
 version: "3"
 
 services:
-  traefik:
-    image: "traefik:v2.2"
-    command:
-      - "--log.level=DEBUG"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.excelresolver.acme.httpchallenge=true"
-      - "--certificatesresolvers.excelresolver.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.excelresolver.acme.email=${LETSENCRYPT_EMAIL}"
-      - "--certificatesresolvers.excelresolver.acme.storage=/letsencrypt/acme.json"
-    labels:
-      # enable traefik
-      - "traefik.enable=true"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - cert-vol:/letsencrypt
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-
   custom-erpnext-nginx:
     image: custom-erpnext-nginx:${ERPNEXT_VERSION}
     restart: on-failure
@@ -31,11 +9,14 @@ services:
       - FRAPPE_PY_PORT=8000
       - FRAPPE_SOCKETIO=frappe-socketio
       - SOCKETIO_PORT=9000
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.custom-erpnext-nginx.rule=Host(${SITES})"
-      - "${ENTRYPOINT_LABEL}"
-      - "traefik.http.services.custom-erpnext-nginx.loadbalancer.server.port=80"
+    ports:
+      - "80:80"
+      - "443:443"
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.custom-erpnext-nginx.rule=Host(${SITES})"
+#      - "${ENTRYPOINT_LABEL}"
+#      - "traefik.http.services.custom-erpnext-nginx.loadbalancer.server.port=80"
     volumes:
       - sites-vol:/var/www/html/sites:rw
       - assets-vol:/assets:rw
