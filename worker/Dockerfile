@@ -6,3 +6,4 @@ RUN install_app takaerp https://github.com/shazolKh/takaerp develop
 #  install_app metabase_integration https://github.com/pipech/frappe-metabase master && \
 #  install_app bookings https://github.com/franknyarkoh/bookings master && \
 #  install_app bench_manager https://github.com/frappe/bench_manager develop
+USER root
